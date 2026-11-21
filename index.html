@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thrive Health — Health Awareness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#568575;--primary-strong:#4A7366;--link:#3F6A5D;--sage:#D8E8E1;--sage-tint:#EDF3EF;--terra:#C7866A;--terra-strong:#A55F45;--peach:#F3D8C8;--peach-text:#8A4E37;--cream:#F9F6F0;--forest:#364D46;--muted:#52655F;--border:#E7DED5}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--forest);font-family:'DM Sans',system-ui,sans-serif}
+h1,h2,h3,.hd{font-family:'Manrope',system-ui,sans-serif}
+h1,h2,h3,p{margin:0}
+img{display:block;max-width:100%}
+button,input,select,textarea{font-family:inherit}
+[hidden]{display:none !important}
+.wrap{max-width:1200px;margin:0 auto;padding-left:24px;padding-right:24px}
+.eyebrow{font-size:13px;font-weight:700;color:var(--link);text-transform:uppercase;letter-spacing:.08em}
+.muted{color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* buttons */
+.btn{cursor:pointer;border:0;border-radius:999px;font-size:16px;font-weight:700;min-height:52px;padding:14px 28px;transition:background .15s,transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--primary-strong);color:#fff}.btn-primary:hover{background:var(--link)}
+.btn-donate{background:var(--terra-strong);color:#fff}.btn-donate:hover{background:#8F4F38}
+.btn-ghost{background:transparent;color:var(--forest);border:1px solid var(--primary);font-weight:600}.btn-ghost:hover{background:var(--sage)}
+.btn-sm{min-height:44px;padding:10px 22px;font-size:15px;font-weight:600}
+button:disabled{cursor:not-allowed;opacity:.45;transform:none !important}
+:focus-visible{outline:3px solid var(--terra);outline-offset:3px}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(249,246,240,.94);backdrop-filter:blur(10px)}
+.head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:10px;background:none;border:0;padding:4px 0;color:var(--forest);cursor:pointer}
+.logo-mark{width:36px;height:36px;border-radius:11px;background:var(--primary);display:flex;align-items:center;justify-content:center}
+.logo-text{font-size:20px;font-weight:800;letter-spacing:-.02em}
+nav.main{display:flex;flex-wrap:wrap;align-items:center;gap:22px}
+.navlink{cursor:pointer;background:none;border:0;padding:10px 6px;min-height:44px;font-size:15px;font-weight:500;color:var(--muted);text-underline-offset:6px;text-decoration-thickness:2px}
+.navlink:hover{color:var(--forest)}
+.navlink.active{color:var(--forest);font-weight:700;text-decoration-line:underline}
+
+/* hero */
+.hero{padding-top:64px;padding-bottom:96px;display:flex;flex-direction:column;gap:48px}
+.hero-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px}
+.display{font-size:clamp(44px,6.4vw,86px);line-height:1.04;letter-spacing:-.045em;font-weight:700;flex:1 1 640px}
+.oval{position:relative;display:inline-block;padding:0 6px}
+.oval::after{content:"";position:absolute;left:-16px;right:-16px;top:-2px;bottom:-6px;border:2px solid var(--terra);border-radius:50%;transform:rotate(-4deg);pointer-events:none}
+.line2{display:inline-flex;align-items:center;flex-wrap:wrap;gap:24px}
+.toggle{cursor:pointer;width:104px;height:54px;border-radius:999px;border:2px solid var(--primary);background:#fff;padding:4px;display:inline-flex;align-items:center;position:relative}
+.toggle .knob{width:42px;height:42px;border-radius:50%;background:var(--primary);transition:transform .25s}
+.toggle:hover .knob{transform:translateX(44px)}
+.toggle svg{position:absolute;right:12px}
+.contact-mini{display:flex;flex-direction:column;gap:22px;padding-top:16px;min-width:200px}
+.contact-mini .lbl{font-size:15px;color:var(--muted)}
+.contact-mini .val{font-size:17px;font-weight:700;margin-top:4px}
+.hero-bottom{display:flex;flex-wrap:wrap;gap:40px;align-items:stretch}
+.hero-left{flex:1 1 300px;max-width:380px;display:flex;flex-direction:column;justify-content:space-between;gap:32px}
+.avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 6px 16px rgba(54,77,70,.15)}
+.arrowpill{cursor:pointer;height:52px;padding:0 22px;border-radius:999px;border:2px solid var(--primary);background:#fff;display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--forest);transition:background .2s}
+.arrowpill:hover{background:var(--sage)}
+.hero-photo{flex:999 1 520px;min-width:0;position:relative;border-radius:32px;overflow:hidden;min-height:440px;background:var(--sage)}
+.hero-photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%}
+.notif{position:absolute;left:24px;top:24px;background:#fff;border-radius:999px;padding:8px 16px 8px 8px;display:flex;align-items:center;gap:10px;box-shadow:0 12px 28px rgba(54,77,70,.18)}
+.notif img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+.badge{width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:4px}
+.date-chip{position:absolute;right:24px;bottom:24px;background:rgba(54,77,70,.88);color:var(--cream);border-radius:18px;padding:14px 18px;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
+
+/* topics */
+.tint{background:var(--sage-tint)}
+.section{padding-top:96px;padding-bottom:96px}
+.h2{font-size:clamp(30px,3.4vw,42px);line-height:1.2;letter-spacing:-.03em;font-weight:600}
+.center{text-align:center;margin-left:auto;margin-right:auto}
+.carousel{display:flex;align-items:center;gap:16px}
+.round{cursor:pointer;flex-shrink:0;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.round.outline{border:2px solid var(--primary);background:transparent}
+.round.fill{border:0;background:var(--primary)}
+.round:hover{background:var(--primary-strong)}.round:hover svg{stroke:#fff}
+.track{flex:1;min-width:0;display:flex;gap:20px;overflow-x:auto;padding:8px 4px 20px;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-behavior:smooth}
+.track::-webkit-scrollbar{display:none}
+.topic{cursor:pointer;scroll-snap-align:start;flex:0 0 min(320px,82%);text-align:left;background:#fff;border-radius:22px;padding:12px 12px 22px;border:2px solid transparent;display:flex;flex-direction:column;gap:16px;color:var(--forest);transition:border-color .15s,transform .2s,box-shadow .2s}
+.topic:hover{transform:translateY(-4px);box-shadow:0 18px 36px rgba(54,77,70,.12)}
+.topic.selected{border-color:var(--primary)}
+.topic .ph{display:block;border-radius:14px;overflow:hidden;height:220px}
+.topic .ph img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.topic:hover .ph img{transform:scale(1.04)}
+.topic .tx{padding:0 8px;display:flex;flex-direction:column;gap:6px}
+.topic .tt{font-size:20px;font-weight:700}
+.topic .tb{font-size:14px;line-height:1.5;color:var(--muted)}
+.tips{background:#fff;border-radius:24px;padding:28px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px;align-items:center}
+.tip{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5}
+.tip .n{width:30px;height:30px;flex-shrink:0;border-radius:50%;background:var(--peach);color:var(--peach-text);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+
+/* rows */
+.row{display:flex;flex-wrap:wrap;gap:56px;align-items:center}
+.row.rev{flex-wrap:wrap-reverse}
+.col{flex:1 1 420px;display:flex;flex-direction:column;gap:22px}
+.photo{flex:1 1 380px;border-radius:28px;overflow:hidden;height:440px}
+.photo img{width:100%;height:100%;object-fit:cover}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding-top:12px;max-width:500px}
+.stat-n{font-size:34px;font-weight:800;color:var(--link);letter-spacing:-.03em}
+.stat-l{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.4}
+.pill{align-self:flex-start;background:var(--peach);color:var(--peach-text);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px 24px;padding:4px 0 8px}
+.check{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600}
+.check span{width:24px;height:24px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+
+/* band */
+.band{background:var(--primary-strong);color:#fff}
+.ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px}
+.way{cursor:pointer;text-align:center;border:0;border-radius:22px;padding:28px 22px;color:var(--forest);display:flex;flex-direction:column;align-items:center;gap:12px;transition:transform .2s,box-shadow .2s}
+.way:hover{transform:translateY(-4px);box-shadow:0 18px 36px rgba(0,0,0,.18)}
+.way .num{width:44px;height:44px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px}
+.way .wt{font-size:19px;font-weight:700}
+.way .wb{font-size:14px;line-height:1.5}
+.news{border-top:1px solid rgba(255,255,255,.22);padding-top:56px;display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center}
+.news h2{font-size:clamp(30px,3.6vw,46px);line-height:1.1;letter-spacing:-.02em;font-weight:700;text-transform:uppercase}
+.news form{width:100%;max-width:520px}
+.news .box{display:flex;background:#fff;border-radius:16px;padding:6px;gap:6px}
+.news input{flex:1;min-width:0;min-height:52px;padding:0 16px;border:1px solid transparent;border-radius:12px;background:#fff;color:var(--forest);font-size:16px}
+.news .go{width:64px;min-height:52px;border:0;border-radius:12px;background:var(--terra-strong);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.news .go:hover{background:#8F4F38}
+.ok{background:#fff;color:var(--forest);border-radius:16px;padding:16px 24px;font-size:16px;font-weight:600}
+
+/* page heads (about/contact) */
+.page-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px}
+.page-head h1{flex:1 1 560px;font-size:clamp(42px,5.6vw,72px);line-height:1.05;letter-spacing:-.045em;font-weight:700}
+.page-head h1 .oval::after{left:-14px;right:-14px}
+.page-head p{flex:1 1 320px;max-width:420px;font-size:17px;line-height:1.65;color:var(--muted)}
+.cards3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.card{background:#fff;border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:12px}
+.card .num{width:44px;height:44px;border-radius:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.card h3{font-size:22px;letter-spacing:-.02em}
+.card p{font-size:16px;line-height:1.6;color:var(--muted)}
+.values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.value{background:#fff;border:1px solid var(--border);border-radius:18px;padding:20px}
+.value b{font-family:'Manrope',sans-serif;font-size:18px}
+.value div{font-size:14px;line-height:1.5;color:var(--muted);margin-top:6px}
+
+/* forms */
+.field{min-height:52px;padding:0 16px;border-radius:14px;border:1px solid var(--border);background:var(--cream);color:var(--forest);font-size:16px;width:100%}
+textarea.field{padding:14px 16px;resize:vertical}
+.field:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(86,133,117,.25)}
+.fg{display:flex;flex-direction:column;gap:8px}
+.fg label{font-size:14px;font-weight:600}
+.formcard{flex:999 1 560px;min-width:0;background:#fff;border:1px solid var(--border);border-radius:28px;padding:36px}
+.cform{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px}
+.full{grid-column:1/-1}
+.info{background:var(--sage);border-radius:28px;padding:28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.info .lbl{font-size:14px;color:var(--link);font-weight:600}
+.info .val{font-size:15px;font-weight:700;margin-top:4px;font-family:'Manrope',sans-serif}
+.success{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:24px 0}
+.tick{width:56px;height:56px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center}
+
+/* footer */
+footer{border-top:1px solid var(--border)}
+.foot{padding-top:72px;padding-bottom:32px;display:flex;flex-direction:column;gap:48px}
+.foot-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px}
+.foot-cols{flex:2 1 520px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:32px}
+.foot-cols nav,.foot-cols>div{display:flex;flex-direction:column;gap:12px;font-size:15px;color:var(--muted)}
+.foot-cols .ft{font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;color:var(--forest)}
+.foot-link{cursor:pointer;background:none;border:0;padding:0;color:var(--muted);font-size:15px;text-align:left}
+.foot-link:hover{color:var(--forest);text-decoration:underline}
+.social{width:40px;height:40px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;transition:background .15s}
+.social:hover{background:var(--link)}
+.foot-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:14px;color:var(--muted)}
+
+/* modals */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(54,77,70,.55);display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
+.dialog{position:relative;width:100%;background:#fff;border-radius:28px;box-shadow:0 24px 64px rgba(54,77,70,.25);margin:auto}
+.close{cursor:pointer;position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:0;background:var(--cream);display:flex;align-items:center;justify-content:center;z-index:2}
+.close:hover{background:var(--sage)}
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;background:var(--cream);padding:4px;border-radius:999px}
+.seg button{cursor:pointer;border:0;min-height:44px;border-radius:999px;font-size:15px;font-weight:600;color:var(--forest);background:transparent}
+.seg button[aria-pressed="true"]{background:#fff;box-shadow:0 2px 8px rgba(54,77,70,.12)}
+.presets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.presets button{cursor:pointer;min-height:48px;border-radius:14px;font-size:16px;font-weight:700;border:2px solid var(--border);background:#fff;color:var(--forest)}
+.presets button[aria-pressed="true"]{border-color:var(--primary);background:var(--sage)}
+.amt{position:relative}
+.amt span{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:20px;font-weight:700;color:var(--muted)}
+.amt input{min-height:60px;padding:0 18px 0 44px;font-size:24px;font-weight:700}
+.google{cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;min-height:52px;border-radius:14px;border:1px solid var(--border);background:#fff;color:var(--forest);font-size:16px;font-weight:600;width:100%}
+.google:hover{background:var(--cream)}
+.or{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted)}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--border)}
+.linkbtn{cursor:pointer;background:none;border:0;padding:0;color:var(--link);font-weight:600;font-size:inherit;text-decoration:underline;text-underline-offset:3px}
+.done{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:24px 0}
+.done .tick{width:72px;height:72px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap head">
+    <button class="logo" data-go="home" aria-label="Go to home page">
+      <span class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 5.65-7 10-7 10z"/><path d="M8 12h2l1-2 2 4 1-2h2"/></svg></span>
+      <span class="hd logo-text">Thrive Health</span>
+    </button>
+    <nav class="main" aria-label="Main">
+      <button class="navlink active" data-go="home" aria-current="page">Home</button>
+      <button class="navlink" data-go="about">About us</button>
+      <button class="navlink" data-go="contact">Contact us</button>
+      <button class="navlink" data-open="donate">Donate here</button>
+    </nav>
+    <button class="btn btn-primary btn-sm" data-open="auth">Sign up</button>
+  </div>
+</header>
+
+<main>
+<!-- ============ HOME ============ -->
+<div data-view="home">
+
+  <!-- 1. Hero -->
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <div class="hero-top">
+      <h1 id="hero-title" class="display">Know your health,<br>
+        <span class="line2">
+          <span>protect your <span class="oval">community</span></span>
+          <button class="toggle" data-scroll="topics" aria-label="Explore health topics">
+            <span class="knob"></span>
+            <svg width="30" height="20" viewBox="0 0 30 20" fill="none" stroke="#364D46" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10h24M19 3l7 7-7 7"/></svg>
+          </button>
+        </span>
+      </h1>
+      <div class="contact-mini">
+        <div><div class="lbl">Call us</div><div class="val hd">[+000 000 000 0000]</div></div>
+        <div><div class="lbl">Find us</div><div class="val hd">[Street, City]</div></div>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <div class="hero-left">
+        <p class="muted" style="font-size:16px;line-height:1.65">Health is not one-size-fits-all. We share clear, trusted information and bring free screenings to your neighbourhood, so problems are caught early and no one faces them alone.</p>
+        <div style="display:flex;align-items:center;gap:12px">
+          <img class="avatar" src="img/avatar.jpg" alt="Smiling community volunteer">
+          <button class="arrowpill" data-open="auth" aria-label="Join as a volunteer">Join us
+            <svg width="30" height="20" viewBox="0 0 30 20" fill="none" stroke="#364D46" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10h24M19 3l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <div>
+          <div class="hd" style="font-size:56px;font-weight:800;letter-spacing:-.04em;line-height:1">Free<sup style="font-size:26px;color:var(--terra-strong)">+</sup></div>
+          <div style="font-size:16px;font-weight:600;margin-top:8px">Screenings, guides &amp; support</div>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="img/hero.jpg" alt="A health worker talks with a patient during a consultation">
+        <div class="notif">
+          <img src="img/avatar.jpg" alt="">
+          <div><div class="hd" style="font-size:14px;font-weight:700">Tobi booked a screening</div><div class="muted" style="font-size:12px">2 min ago</div></div>
+          <span class="badge">1</span>
+        </div>
+        <div class="date-chip">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F3D8C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+          Next free screening day · [DATE]
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Topics -->
+  <section id="topics" class="tint" aria-labelledby="topics-title">
+    <div class="wrap section" style="display:flex;flex-direction:column;gap:40px">
+      <h2 id="topics-title" class="h2 center" style="max-width:640px">The health topics we raise awareness about.</h2>
+      <div class="carousel">
+        <button class="round outline" data-slide="-1" aria-label="Previous topics"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3F6A5D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <div id="track" class="track">
+          <button class="topic selected" data-topic="heart" aria-pressed="true"><span class="ph"><img src="img/heart.jpg" alt="Nurse speaking with a woman during a check-up"></span><span class="tx"><span class="tt hd">Heart health</span><span class="tb">Protect your heart with simple checks and daily habits.</span></span></button>
+          <button class="topic" data-topic="mind" aria-pressed="false"><span class="ph"><img src="img/mind.jpg" alt="Person walking through a green mountain valley"></span><span class="tx"><span class="tt hd">Mental wellbeing</span><span class="tb">Your mind matters as much as your body. Talk about it.</span></span></button>
+          <button class="topic" data-topic="diabetes" aria-pressed="false"><span class="ph"><img src="img/diabetes.jpg" alt="Hands holding a blood glucose meter"></span><span class="tx"><span class="tt hd">Diabetes</span><span class="tb">Know the signs and get your blood sugar checked.</span></span></button>
+          <button class="topic" data-topic="screening" aria-pressed="false"><span class="ph"><img src="img/screening.jpg" alt="Nurse using a tablet beside a hospital bed"></span><span class="tx"><span class="tt hd">Cancer screening</span><span class="tb">Many cancers are more treatable when found early.</span></span></button>
+          <button class="topic" data-topic="maternal" aria-pressed="false"><span class="ph"><img src="img/maternal.jpg" alt="Doctor smiling on a video call with a child beside her"></span><span class="tx"><span class="tt hd">Maternal &amp; child health</span><span class="tb">Healthy pregnancies and strong starts for every child.</span></span></button>
+          <button class="topic" data-topic="active" aria-pressed="false"><span class="ph"><img src="img/active.jpg" alt="Two women stretching on exercise mats at home"></span><span class="tx"><span class="tt hd">Active living &amp; nutrition</span><span class="tb">Everyday movement and food choices that keep you strong.</span></span></button>
+        </div>
+        <button class="round fill" data-slide="1" aria-label="Next topics"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="tips" aria-live="polite">
+        <div><div class="eyebrow">Quick tips</div><h3 id="tips-title" style="margin-top:6px;font-size:24px;letter-spacing:-.02em">Heart health</h3></div>
+        <div class="tip"><span class="n hd">1</span><span data-tip="0"></span></div>
+        <div class="tip"><span class="n hd">2</span><span data-tip="1"></span></div>
+        <div class="tip"><span class="n hd">3</span><span data-tip="2"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Services + campaign -->
+  <section class="wrap section" aria-labelledby="reach-title" style="display:flex;flex-direction:column;gap:104px">
+    <div class="row">
+      <div class="col">
+        <h2 id="reach-title" class="h2" style="font-size:clamp(30px,3.2vw,40px)">Wherever you are, we bring health awareness closer to home.</h2>
+        <p class="muted" style="font-size:16px;line-height:1.7;max-width:500px">We work with clinics, schools, markets and places of worship to share trusted guidance and run free check-ups right where people already gather.</p>
+        <div class="stats">
+          <div><div class="stat-n hd">[00+]</div><div class="stat-l">Communities reached</div></div>
+          <div><div class="stat-n hd">[000+]</div><div class="stat-l">Free screenings run</div></div>
+          <div><div class="stat-n hd">[00+]</div><div class="stat-l">Trained volunteers</div></div>
+        </div>
+      </div>
+      <div class="photo"><img src="img/doctor.jpg" alt="Doctor in a white coat reviewing notes on a tablet"></div>
+    </div>
+    <div class="row rev">
+      <div class="photo"><img src="img/feature.jpg" alt="Health worker checking a reading on a blood pressure monitor"></div>
+      <div class="col">
+        <span class="pill">Featured campaign</span>
+        <h2 class="h2" style="font-size:clamp(30px,3.2vw,40px)">Early detection saves lives. Get checked for free.</h2>
+        <p class="muted" style="font-size:16px;line-height:1.7">Many serious conditions show no signs at first. At our screening days, trained volunteers check the essentials and explain your results.</p>
+        <div class="checks">
+          <div class="check"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3F6A5D" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>Blood pressure check</div>
+          <div class="check"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3F6A5D" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>Blood sugar test</div>
+          <div class="check"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3F6A5D" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>BMI &amp; weight</div>
+          <div class="check"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3F6A5D" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>Referral if needed</div>
+        </div>
+        <div class="btns">
+          <button class="btn btn-primary" data-open="auth">Register for a screening</button>
+          <button class="btn btn-ghost" data-go="contact">Host one near you</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Band -->
+  <section class="band" aria-labelledby="ways-title">
+    <div class="wrap section" style="display:flex;flex-direction:column;gap:48px">
+      <h2 id="ways-title" class="h2 center" style="max-width:720px">With your help, we can reach every corner of our community.</h2>
+      <div class="ways">
+        <button class="way" data-open="donate" style="background:var(--peach)"><span class="num hd" style="color:var(--terra-strong)">01</span><span class="wt hd">Donate</span><span class="wb">Fund screening kits, guides and outreach.</span></button>
+        <button class="way" data-open="auth" style="background:var(--sage)"><span class="num hd" style="color:var(--link)">02</span><span class="wt hd">Volunteer</span><span class="wb">Help run screening days. No medical background needed.</span></button>
+        <button class="way" data-go="contact" style="background:var(--cream)"><span class="num hd" style="color:var(--link)">03</span><span class="wt hd">Host a screening</span><span class="wb">Bring a free check-up day to your school or workplace.</span></button>
+        <button class="way" data-focus="nl-email" style="background:var(--border)"><span class="num hd" style="color:var(--terra-strong)">04</span><span class="wt hd">Spread the word</span><span class="wb">Share tips with family and friends every month.</span></button>
+      </div>
+      <div class="news">
+        <h2>Subscribe to<br>our newsletter.</h2>
+        <div id="nl-ok" class="ok" role="status" hidden>Thanks! You're on the list for monthly health tips.</div>
+        <form id="nl-form">
+          <label for="nl-email" class="sr-only">Email address</label>
+          <div class="box">
+            <input id="nl-email" type="email" required placeholder="Enter your email address">
+            <button class="go" type="submit" aria-label="Subscribe"><svg width="26" height="18" viewBox="0 0 30 20" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10h24M19 3l7 7-7 7"/></svg></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div data-view="about" hidden>
+  <section class="wrap" aria-labelledby="about-title" style="padding-top:72px;padding-bottom:88px;display:flex;flex-direction:column;gap:48px">
+    <div class="page-head">
+      <h1 id="about-title">Health knowledge should reach <span class="oval">everyone</span>.</h1>
+      <p>Thrive Health is a community health awareness initiative. We turn trusted medical guidance into simple, practical steps and bring free screenings to where people live.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:20px">
+      <div style="flex:2 1 520px;border-radius:28px;overflow:hidden;height:420px"><img src="img/telehealth.jpg" alt="Patient on a video call with a doctor on a tablet" style="width:100%;height:100%;object-fit:cover"></div>
+      <div style="flex:1 1 300px;border-radius:28px;overflow:hidden;height:420px"><img src="img/kid.jpg" alt="Happy child posing against a blue wall" style="width:100%;height:100%;object-fit:cover"></div>
+    </div>
+  </section>
+  <section class="tint" aria-labelledby="pillars-title">
+    <div class="wrap section" style="display:flex;flex-direction:column;gap:40px">
+      <h2 id="pillars-title" class="h2 center">What we do</h2>
+      <div class="cards3">
+        <div class="card"><span class="num hd" style="background:var(--peach);color:var(--terra-strong)">01</span><h3>Educate</h3><p>Plain-language guides, workshops and campaigns on the conditions that affect our communities most.</p></div>
+        <div class="card"><span class="num hd" style="background:var(--sage);color:var(--link)">02</span><h3>Screen</h3><p>Free community check-ups for blood pressure, blood sugar and more, run by trained volunteers.</p></div>
+        <div class="card"><span class="num hd" style="background:var(--border);color:var(--forest)">03</span><h3>Support</h3><p>Referrals to local clinics and follow-up, so no one is left alone with a result.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="wrap section row" aria-labelledby="values-title">
+    <div class="photo" style="height:460px"><img src="img/heart.jpg" alt="Nurse speaking warmly with a patient"></div>
+    <div class="col" style="gap:24px">
+      <h2 id="values-title" class="h2" style="font-size:clamp(30px,3.2vw,40px)">The values behind every guide and every screening.</h2>
+      <div class="values">
+        <div class="value"><b>Trust</b><div>Evidence-based and reviewed by health professionals.</div></div>
+        <div class="value"><b>Access</b><div>Free, local and easy to understand.</div></div>
+        <div class="value"><b>Dignity</b><div>Private, respectful and without judgement.</div></div>
+        <div class="value"><b>Community</b><div>Led by the people we serve.</div></div>
+      </div>
+      <button class="btn btn-donate" data-open="donate" style="align-self:flex-start">Support our work</button>
+    </div>
+  </section>
+</div>
+
+<!-- ============ CONTACT ============ -->
+<div data-view="contact" hidden>
+  <section class="wrap" aria-labelledby="contact-title" style="padding-top:72px;padding-bottom:104px;display:flex;flex-direction:column;gap:48px">
+    <div class="page-head">
+      <h1 id="contact-title">We'd love to <span class="oval">hear</span> from you.</h1>
+      <p>Questions, partnerships or hosting a screening day. Send us a message and we'll reply within two working days.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:stretch">
+      <div class="formcard">
+        <div id="c-ok" class="success" role="status" hidden>
+          <span class="tick"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3F6A5D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+          <h2 style="font-size:28px;letter-spacing:-.02em">Message sent</h2>
+          <p id="c-ok-text" class="muted" style="font-size:17px;line-height:1.6"></p>
+          <button id="c-again" class="btn btn-ghost btn-sm">Send another message</button>
+        </div>
+        <form id="c-form" class="cform">
+          <div class="fg"><label for="c-name">Full name</label><input id="c-name" class="field" type="text" required autocomplete="name"></div>
+          <div class="fg"><label for="c-email">Email</label><input id="c-email" class="field" type="email" required autocomplete="email"></div>
+          <div class="fg full"><label for="c-topic">What's this about?</label>
+            <select id="c-topic" class="field"><option>General enquiry</option><option>Host a screening day</option><option>Volunteering</option><option>Partnerships</option><option>Donations</option></select></div>
+          <div class="fg full"><label for="c-msg">Message</label><textarea id="c-msg" class="field" required rows="6"></textarea></div>
+          <div class="full"><button class="btn btn-primary" type="submit">Send message</button></div>
+        </form>
+      </div>
+      <aside style="flex:1 1 340px;display:flex;flex-direction:column;gap:16px">
+        <div style="position:relative;border-radius:28px;overflow:hidden;min-height:220px;flex-grow:1"><img src="img/doctor.jpg" alt="Doctor reviewing notes on a tablet" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+        <div class="info">
+          <div><div class="lbl">Email</div><div class="val">[hello@yourorg.org]</div></div>
+          <div><div class="lbl">Call us</div><div class="val">[+000 000 000 0000]</div></div>
+          <div><div class="lbl">Find us</div><div class="val">[Street, City]</div></div>
+          <div><div class="lbl">Hours</div><div class="val">Mon – Fri, 9 – 5</div></div>
+        </div>
+        <div role="note" style="background:var(--peach);border-radius:20px;padding:18px 22px;font-size:15px;line-height:1.5"><strong>Medical emergency?</strong> Don't use this form. Call your local emergency number straight away.</div>
+      </aside>
+    </div>
+  </section>
+</div>
+</main>
+
+<!-- 5. Footer -->
+<footer>
+  <div class="wrap foot">
+    <div class="foot-top">
+      <div style="flex:1 1 260px;display:flex;flex-direction:column;gap:18px;max-width:320px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 5.65-7 10-7 10z"/><path d="M8 12h2l1-2 2 4 1-2h2"/></svg></span>
+          <span class="hd logo-text">Thrive Health</span>
+        </div>
+        <p class="muted" style="font-size:15px;line-height:1.6">Health awareness, free screenings and support for every community.</p>
+        <div style="display:flex;gap:10px">
+          <a class="social" href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h-2a4 4 0 0 0-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2z"/></svg></a>
+          <a class="social" href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+          <a class="social" href="#" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-cols">
+        <nav aria-label="Footer explore"><div class="ft">Explore</div><button class="foot-link" data-go="home">Home</button><button class="foot-link" data-go="about">About us</button><button class="foot-link" data-go="contact">Contact us</button></nav>
+        <nav aria-label="Footer get involved"><div class="ft">Get involved</div><button class="foot-link" data-open="donate">Donate here</button><button class="foot-link" data-open="auth">Sign up</button><button class="foot-link" data-open="auth">Volunteer</button></nav>
+        <div><div class="ft">Reach us</div><span>[hello@yourorg.org]</span><span>[+000 000 000 0000]</span><span>[City, Country]</span></div>
+      </div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Thrive Health. All rights reserved.</span><span>Information here is for awareness and does not replace professional medical advice.</span></div>
+  </div>
+</footer>
+
+<!-- ============ DONATE MODAL ============ -->
+<div id="donate" class="overlay" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="donate-title" style="max-width:480px;padding:32px">
+    <button class="close" data-close aria-label="Close donation form"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#364D46" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div id="d-form" style="display:flex;flex-direction:column;gap:22px">
+      <div style="padding-right:48px">
+        <span style="width:48px;height:48px;border-radius:14px;background:var(--peach);display:flex;align-items:center;justify-content:center;margin-bottom:14px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A55F45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 5.65-7 10-7 10z"/></svg></span>
+        <h2 id="donate-title" style="font-size:28px;letter-spacing:-.03em">Make a donation</h2>
+        <p class="muted" style="margin-top:6px;font-size:15px;line-height:1.5">Fund free screenings and health guides for families who need them.</p>
+      </div>
+      <div class="seg" role="group" aria-label="Donation frequency">
+        <button data-freq="once" aria-pressed="true">One-time</button>
+        <button data-freq="monthly" aria-pressed="false">Monthly</button>
+      </div>
+      <div class="presets">
+        <button data-amt="10" aria-pressed="false">$10</button>
+        <button data-amt="25" aria-pressed="true">$25</button>
+        <button data-amt="50" aria-pressed="false">$50</button>
+        <button data-amt="100" aria-pressed="false">$100</button>
+      </div>
+      <div class="fg">
+        <label for="d-amount">Or enter an amount</label>
+        <div class="amt"><span aria-hidden="true">$</span><input id="d-amount" class="field" type="number" min="1" step="1" inputmode="decimal" placeholder="0" value="25"></div>
+      </div>
+      <button id="d-submit" class="btn btn-donate" style="min-height:56px;font-size:17px">Donate $25</button>
+      <p class="muted" style="margin-top:-8px;text-align:center;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#52655F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Secure checkout. You can cancel monthly gifts anytime.</p>
+    </div>
+    <div id="d-thanks" class="done" role="status" hidden>
+      <span class="tick"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3F6A5D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+      <h2 style="font-size:28px;letter-spacing:-.03em">Thank you!</h2>
+      <p id="d-thanks-text" class="muted" style="font-size:16px;line-height:1.6;max-width:340px"></p>
+      <p class="muted" style="font-size:13px">Prototype only. No payment was taken.</p>
+      <button class="btn btn-primary" data-close style="margin-top:8px">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ AUTH MODAL ============ -->
+<div id="auth" class="overlay" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="auth-title" style="max-width:860px;overflow:hidden;display:flex;flex-wrap:wrap">
+    <div style="flex:1 1 300px;position:relative;min-height:200px;background:var(--sage)">
+      <img src="img/telehealth.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      <div style="position:absolute;left:20px;right:20px;bottom:20px;background:rgba(255,255,255,.94);border-radius:18px;padding:16px 18px">
+        <div class="hd" style="font-size:16px;font-weight:700">Your health hub</div>
+        <div class="muted" style="font-size:14px;line-height:1.5;margin-top:4px">Book screenings, volunteer and get monthly health tips.</div>
+      </div>
+    </div>
+    <div style="flex:1 1 360px;position:relative;padding:36px 32px 28px;display:flex;flex-direction:column">
+      <button class="close" data-close aria-label="Close sign in"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#364D46" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div id="a-form-wrap" style="display:flex;flex-direction:column;gap:18px">
+        <div style="padding-right:48px">
+          <h2 id="auth-title" style="font-size:26px;letter-spacing:-.03em">Create your account</h2>
+          <p id="a-sub" class="muted" style="margin-top:6px;font-size:15px;line-height:1.5">Join to register for screenings, volunteer and get health tips.</p>
+        </div>
+        <button id="a-google" class="google">
+          <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+          <span id="a-google-label">Sign up with Google</span>
+        </button>
+        <div class="or">or use your email</div>
+        <form id="a-form" style="display:flex;flex-direction:column;gap:14px">
+          <div class="fg" data-mode="signup"><label for="a-name">Full name</label><input id="a-name" class="field" type="text" autocomplete="name" required></div>
+          <div class="fg"><label for="a-email">Email</label><input id="a-email" class="field" type="email" autocomplete="email" required></div>
+          <div class="fg">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><label for="a-pass">Password</label><button type="button" class="linkbtn" data-mode="signin" style="font-size:13px" hidden>Forgot password?</button></div>
+            <input id="a-pass" class="field" type="password" minlength="8" autocomplete="new-password" required>
+            <span class="muted" data-mode="signup" style="font-size:13px">At least 8 characters.</span>
+          </div>
+          <button id="a-cta" class="btn btn-primary" type="submit" style="border-radius:14px;margin-top:4px">Create account</button>
+        </form>
+        <p class="muted" style="text-align:center;font-size:15px"><span id="a-switch-prompt">Already have an account?</span> <button type="button" id="a-switch" class="linkbtn">Sign in</button></p>
+      </div>
+      <div id="a-done" class="done" role="status" hidden style="flex-grow:1;padding:40px 0">
+        <span class="tick"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3F6A5D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+        <h2 id="a-done-title" style="font-size:26px;letter-spacing:-.03em">You're in!</h2>
+        <p id="a-done-body" class="muted" style="font-size:16px;line-height:1.6;max-width:320px"></p>
+        <button class="btn btn-primary" data-close style="margin-top:8px">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $ = function(s, r){ return (r||document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+  var CUR = '$';
+
+  /* ---------- pages ---------- */
+  var VIEWS = ['home','about','contact'];
+  function show(page, push){
+    if (VIEWS.indexOf(page) < 0) page = 'home';
+    $$('[data-view]').forEach(function(v){ v.hidden = v.getAttribute('data-view') !== page; });
+    $$('.navlink[data-go]').forEach(function(b){
+      var on = b.getAttribute('data-go') === page;
+      b.classList.toggle('active', on);
+      if (on) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current');
+    });
+    if (push !== false) { try { history.replaceState(null, '', page === 'home' ? location.pathname : '#' + page); } catch(e){} }
+    window.scrollTo(0, 0);
+  }
+  $$('[data-go]').forEach(function(b){ b.addEventListener('click', function(){ closeAll(); show(b.getAttribute('data-go')); }); });
+  window.addEventListener('hashchange', function(){ show(location.hash.slice(1), false); });
+  show((location.hash || '').slice(1), false);
+
+  $$('[data-scroll]').forEach(function(b){ b.addEventListener('click', function(){ var el = document.getElementById(b.getAttribute('data-scroll')); if (el) el.scrollIntoView({behavior:'smooth'}); }); });
+  $$('[data-focus]').forEach(function(b){ b.addEventListener('click', function(){ var el = document.getElementById(b.getAttribute('data-focus')); if (el) { el.scrollIntoView({behavior:'smooth', block:'center'}); setTimeout(function(){ el.focus({preventScroll:true}); }, 400); } }); });
+
+  /* ---------- topics ---------- */
+  var TIPS = {
+    heart: ['Heart health', ['Check your blood pressure at least once a year.', 'Aim for 150 minutes of moderate activity each week.', 'Cut back on salt and, if you smoke, get support to stop.']],
+    mind: ['Mental wellbeing', ['Talk to someone you trust when things feel heavy.', 'Protect your sleep. Most adults need 7 to 9 hours.', 'Reach out for professional support early. It works.']],
+    diabetes: ['Diabetes', ['Know the signs: thirst, frequent urination, tiredness, blurred vision.', 'Ask for a blood sugar test, especially with a family history.', 'Choose water, whole grains and vegetables over sugary drinks.']],
+    screening: ['Cancer screening', ['Learn what is normal for your body and report changes.', 'Ask your clinic which screenings are right for your age.', 'Don’t wait for symptoms. Screening finds problems early.']],
+    maternal: ['Maternal & child health', ['Start antenatal care as early as possible in pregnancy.', 'Keep every check-up and childhood vaccination appointment.', 'Know the danger signs: heavy bleeding, severe headache, swelling.']],
+    active: ['Active living & nutrition', ['Move every day. A brisk 30-minute walk counts.', 'Fill half your plate with vegetables and fruit.', 'Drink water through the day and limit added sugar.']]
+  };
+  function pickTopic(k){
+    $$('.topic').forEach(function(c){ var on = c.getAttribute('data-topic') === k; c.classList.toggle('selected', on); c.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    $('#tips-title').textContent = TIPS[k][0];
+    $$('[data-tip]').forEach(function(el, i){ el.textContent = TIPS[k][1][i]; });
+  }
+  $$('.topic').forEach(function(c){ c.addEventListener('click', function(){ pickTopic(c.getAttribute('data-topic')); }); });
+  pickTopic('heart');
+  var track = $('#track');
+  $$('[data-slide]').forEach(function(b){ b.addEventListener('click', function(){ track.scrollBy({ left: Number(b.getAttribute('data-slide')) * Math.max(340, track.clientWidth * 0.8), behavior: 'smooth' }); }); });
+
+  /* ---------- modals ---------- */
+  var lastFocus = null;
+  function open(id){
+    closeAll();
+    lastFocus = document.activeElement;
+    var m = document.getElementById(id);
+    if (id === 'donate') resetDonate();
+    if (id === 'auth') { $('#a-form-wrap').hidden = false; $('#a-done').hidden = true; }
+    m.hidden = false;
+    document.body.style.overflow = 'hidden';
+    var f = $('.close', m); if (f) f.focus();
+  }
+  function closeAll(){
+    var any = false;
+    $$('.overlay').forEach(function(m){ if (!m.hidden) any = true; m.hidden = true; });
+    document.body.style.overflow = '';
+    if (any && lastFocus) { try { lastFocus.focus(); } catch(e){} }
+  }
+  $$('[data-open]').forEach(function(b){ b.addEventListener('click', function(){ open(b.getAttribute('data-open')); }); });
+  $$('[data-close]').forEach(function(b){ b.addEventListener('click', closeAll); });
+  $$('.overlay').forEach(function(m){ m.addEventListener('click', function(e){ if (e.target === m) closeAll(); }); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeAll(); });
+
+  /* ---------- donate ---------- */
+  var freq = 'once';
+  var amtInput = $('#d-amount'), dBtn = $('#d-submit');
+  function fmt(n){ return CUR + (Math.round(n * 100) / 100).toLocaleString(); }
+  function syncDonate(){
+    var n = parseFloat(amtInput.value), valid = !isNaN(n) && n >= 1;
+    $$('[data-amt]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-amt') === String(amtInput.value))); });
+    $$('[data-freq]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-freq') === freq)); });
+    dBtn.disabled = !valid;
+    dBtn.textContent = valid ? 'Donate ' + fmt(n) + (freq === 'monthly' ? ' monthly' : '') : 'Enter an amount';
+  }
+  function resetDonate(){ $('#d-form').hidden = false; $('#d-thanks').hidden = true; syncDonate(); }
+  $$('[data-amt]').forEach(function(b){ b.addEventListener('click', function(){ amtInput.value = b.getAttribute('data-amt'); syncDonate(); }); });
+  $$('[data-freq]').forEach(function(b){ b.addEventListener('click', function(){ freq = b.getAttribute('data-freq'); syncDonate(); }); });
+  amtInput.addEventListener('input', syncDonate);
+  dBtn.addEventListener('click', function(){
+    var n = parseFloat(amtInput.value); if (isNaN(n) || n < 1) return;
+    $('#d-thanks-text').textContent = 'Your ' + (freq === 'monthly' ? 'monthly gift of ' : 'gift of ') + fmt(n) + ' helps bring free screenings to another community.';
+    $('#d-form').hidden = true; $('#d-thanks').hidden = false;
+  });
+
+  /* ---------- auth ---------- */
+  var mode = 'signup';
+  function syncAuth(){
+    var up = mode === 'signup';
+    $$('[data-mode]').forEach(function(el){ el.hidden = el.getAttribute('data-mode') !== mode; });
+    $('#a-name').required = up;
+    $('#a-pass').setAttribute('autocomplete', up ? 'new-password' : 'current-password');
+    $('#auth-title').textContent = up ? 'Create your account' : 'Welcome back';
+    $('#a-sub').textContent = up ? 'Join to register for screenings, volunteer and get health tips.' : 'Sign in to manage your screenings and updates.';
+    $('#a-google-label').textContent = up ? 'Sign up with Google' : 'Continue with Google';
+    $('#a-cta').textContent = up ? 'Create account' : 'Sign in';
+    $('#a-switch-prompt').textContent = up ? 'Already have an account?' : 'New here?';
+    $('#a-switch').textContent = up ? 'Sign in' : 'Create an account';
+  }
+  function authDone(via){
+    var first = ($('#a-name').value || '').trim().split(' ')[0];
+    $('#a-done-title').textContent = mode === 'signup' ? (first && via !== 'google' ? 'Welcome, ' + first + '!' : 'You’re in!') : 'Signed in';
+    $('#a-done-body').textContent = via === 'google'
+      ? 'Your Google account is connected. You can now register for screenings and volunteer roles.'
+      : 'Your account is ready. You can now register for screenings and volunteer roles.';
+    $('#a-form-wrap').hidden = true; $('#a-done').hidden = false;
+  }
+  $('#a-switch').addEventListener('click', function(){ mode = mode === 'signup' ? 'signin' : 'signup'; syncAuth(); });
+  $('#a-google').addEventListener('click', function(){ authDone('google'); });
+  $('#a-form').addEventListener('submit', function(e){ e.preventDefault(); authDone('email'); });
+  syncAuth();
+
+  /* ---------- contact ---------- */
+  $('#c-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var first = ($('#c-name').value || '').trim().split(' ')[0] || 'there';
+    $('#c-ok-text').textContent = 'Thanks, ' + first + '. We’ll get back to you at ' + $('#c-email').value + '.';
+    $('#c-form').hidden = true; $('#c-ok').hidden = false;
+  });
+  $('#c-again').addEventListener('click', function(){ $('#c-form').reset(); $('#c-form').hidden = false; $('#c-ok').hidden = true; });
+
+  /* ---------- newsletter ---------- */
+  $('#nl-form').addEventListener('submit', function(e){ e.preventDefault(); $('#nl-form').hidden = true; $('#nl-ok').hidden = false; });
+})();
+</script>
+</body>
+</html>
